@@ -12,22 +12,21 @@ st.set_page_config(
 
 # Function to render Mermaid diagrams
 def render_mermaid(diagram_code):
-    # Remove the ```mermaid and ``` markers if present
-    diagram_code = re.sub(r'```mermaid\s*', '', diagram_code)
-    diagram_code = re.sub(r'\s*```', '', diagram_code)
+    # Clean up the diagram code
+    diagram_code = diagram_code.strip()
     
-    # Render the Mermaid diagram
+    # Display the raw Mermaid code first
+    st.code(diagram_code, language="mermaid")
+    
+    # Then render it using Mermaid.js
     st.markdown(f"""
     <div class="mermaid">
     {diagram_code}
     </div>
-    """, unsafe_allow_html=True)
     
-    # Include Mermaid JavaScript
-    st.markdown("""
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>
-        mermaid.initialize({startOnLoad:true});
+        mermaid.initialize({{startOnLoad:true}});
     </script>
     """, unsafe_allow_html=True)
 
@@ -72,6 +71,8 @@ def display_readme():
                 if part.startswith("MERMAID_PLACEHOLDER_"):
                     # Render Mermaid diagram
                     index = int(part.split('_')[-1])
+                    st.subheader("Architecture Diagram")
+                    st.info("Below is both the Mermaid code and the rendered diagram. You can copy the code for your own use.")
                     render_mermaid(mermaid_blocks[index])
                 else:
                     # Render regular markdown
@@ -83,6 +84,8 @@ st.title("📚 Indian Railways ITMS Documentation")
 st.markdown("""
 This page provides comprehensive documentation for the Indian Railways Integrated Track Monitoring System (ITMS).
 It includes detailed explanations of the system architecture, components, and functionality.
+
+The diagrams below are shown both as code (which you can copy) and as rendered diagrams.
 """)
 
 # Display the README content
@@ -90,8 +93,9 @@ display_readme()
 
 # Note about Mermaid diagrams
 st.info("""
-**Note about diagrams:** The diagrams on this page are rendered using Mermaid.js. If you don't see the diagrams properly, 
-please make sure JavaScript is enabled in your browser. Alternatively, you can view the diagrams in the COMPREHENSIVE_README.md file.
+**Note about diagrams:** The diagrams on this page are rendered using Mermaid.js. If you don't see the rendered diagrams properly, 
+you can still use the Mermaid code shown above each diagram. This code can be used in GitHub markdown files or other documentation tools 
+that support Mermaid.
 """)
 
 # Footer

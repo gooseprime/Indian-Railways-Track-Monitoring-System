@@ -2,132 +2,177 @@
 
 # 🚆 Indian Railways Integrated Track Monitoring System (ITMS)
 
-This is a **prototype** of the **Indian Railways Integrated Track Monitoring System (ITMS)** built with **Streamlit**.  
-The application provides **analysis and visualization of track monitoring data** to ensure safe and reliable railway operations.  
+<div align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/83/Indian_Railways.svg/1200px-Indian_Railways.svg.png" alt="Indian Railways Logo" width="200"/>
+  <h3>A Comprehensive Track Monitoring and Analysis Solution</h3>
+</div>
 
----
+## 📋 Table of Contents
+- [Overview](#-overview)
+- [System Architecture](#-system-architecture)
+- [Features](#-features)
+- [Installation](#%EF%B8%8F-installation)
+- [Usage](#%EF%B8%8F-usage)
+- [Smart India Hackathon Context](#-smart-india-hackathon-context)
+
+## 🔍 Overview
+
+The Indian Railways Integrated Track Monitoring System (ITMS) is a comprehensive solution designed to monitor, analyze, and visualize railway track conditions in real-time. This system combines advanced sensor technology, data processing algorithms, and an intuitive user interface to provide actionable insights for railway maintenance teams.
+
+## 🏗️ System Architecture
+
+### Hardware Components
+
+Below is the Mermaid diagram code showing the hardware architecture:
+
+```mermaid
+graph TD
+    subgraph "Track Monitoring Vehicle"
+        A[GPS Receiver] --> D[Central Processing Unit]
+        B[Inertial Measurement Units] --> D
+        C[Optical Sensors] --> D
+        E[High-Resolution Cameras] --> D
+        F[Accelerometers] --> D
+        G[Distance Measurement System] --> D
+    end
+    
+    D --> H[Data Storage]
+    D --> I[Real-time Transmission System]
+    I --> J[Central Data Server]
+    J --> K[ITMS Software Platform]
+    
+    style D fill:#f9f,stroke:#333,stroke-width:2px
+    style J fill:#bbf,stroke:#333,stroke-width:2px
+    style K fill:#bfb,stroke:#333,stroke-width:2px
+```
+
+### Software Components
+
+Below is the Mermaid diagram code showing the software architecture:
+
+```mermaid
+graph TD
+    A[Data Acquisition Module] --> B[Data Preprocessing]
+    B --> C[Parameter Analysis]
+    B --> D[Video Processing]
+    
+    C --> E[Anomaly Detection]
+    D --> F[Video-Data Synchronization]
+    
+    E --> G[Alert Generation]
+    E --> H[Visualization Engine]
+    F --> H
+    
+    H --> I[Streamlit Dashboard]
+    G --> J[Maintenance Recommendation System]
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#bbf,stroke:#333,stroke-width:2px
+    style H fill:#bfb,stroke:#333,stroke-width:2px
+    style I fill:#fbb,stroke:#333,stroke-width:2px
+```
+
+### Data Flow
+
+Below is the Mermaid diagram code showing the data flow:
+
+```mermaid
+sequenceDiagram
+    participant S as Sensors
+    participant P as Preprocessing
+    participant A as Analysis
+    participant D as Database
+    participant V as Visualization
+    participant U as User Interface
+    
+    S->>P: Raw sensor data
+    S->>P: Video footage
+    P->>A: Filtered data
+    A->>D: Processed parameters
+    A->>D: Anomaly flags
+    D->>V: Query results
+    V->>U: Interactive visualizations
+    U->>D: User queries
+    U->>A: Parameter thresholds
+```
 
 ## ✨ Features
-- 🔧 Data preprocessing with multiple filtering options  
-- 📊 Analysis of track geometry parameters:  
-  - Gauge deviation  
-  - Alignment error  
-  - Twist  
-  - Cross level  
-  - Unevenness  
-- 📈 Acceleration measurements analysis  
-- 🛤️ Rail profile and wear visualization  
-- 🚨 Anomaly detection and flagging  
-- 📍 Interactive chainage range selection  
-- 💾 Data export in **CSV** and **JSON** formats  
 
----
+- 🔧 **Track Parameter Monitoring**: 
+  - Gauge, alignment, twist, cross level, unevenness
+  - Acceleration measurements (vertical and lateral)
+  - Rail profile and wear
+
+- 📊 **Advanced Analytics**: 
+  - Anomaly detection based on thresholds
+  - Trend analysis over distance
+  - Hotspot identification for maintenance
+
+- 📈 **Interactive Visualization**:
+  - Parameter vs. chainage plots
+  - Anomaly highlighting with red markers
+  - Video synchronization with parameter data
+  - Heatmap of parameter correlations
+
+- 💾 **Reporting and Export**:
+  - Data export in CSV and JSON formats
+  - Flagged segments in tabular format
 
 ## ⚙️ Installation
-1. Clone this repository  
+
+1. Clone this repository
    ```bash
    git clone <repo-url>
    cd Indian-Railways-Track-Monitoring-System
-````
+   ```
 
-2. Install the required packages
-
+2. Install the required packages:
    ```bash
    pip install -r requirements.txt
    ```
 
----
+3. Run the application:
+   ```bash
+   streamlit run app.py
+   ```
 
 ## ▶️ Usage
 
-Run the Streamlit application:
+The application consists of multiple pages:
 
-```bash
-streamlit run app.py
-```
+1. **Main Dashboard**: 
+   - Upload data or use sample data
+   - Apply preprocessing filters
+   - View track parameter analysis
+   - Identify flagged segments
 
-The application will open in your default web browser.
+2. **Video Sync Page**: 
+   - View track footage synchronized with parameter data
+   - See real-time parameter values at selected chainage
+   - Auto-advance through the track with adjustable speed
 
----
+3. **Explanation Page**: 
+   - Learn about track monitoring concepts
+   - Understand parameter definitions and significance
 
-## 📂 Data Input
+4. **Documentation Page**:
+   - Access comprehensive system documentation
+   - View architecture diagrams and data flow
 
-You can either:
+## 🏆 Smart India Hackathon Context
 
-* Upload your own **CSV file** with track monitoring data
-* Use the **provided sample data**
+This project aligns perfectly with the Smart India Hackathon's focus on leveraging technology to solve real-world problems in India's infrastructure. The potential impacts include:
 
-### Required CSV Columns:
-
-* `chainage`: Distance along the track (m)
-* `gauge`: Track gauge (mm)
-* `alignment_left`, `alignment_right`: Track alignment (mm)
-* `cross_level`: Cross level (mm)
-* `twist`: Track twist (mm/m)
-* `unevenness_left`, `unevenness_right`: Track unevenness (mm)
-* `vertical_acceleration`, `lateral_acceleration`: Acceleration measurements (g)
-* `rail_wear_left`, `rail_wear_right`: Rail wear measurements (mm)
-* `component_condition`: Condition of track components (text)
-
----
-
-## 🔎 Analysis Performed
-
-* Gauge deviation from nominal value (**1435 mm standard gauge**)
-* Alignment error calculation
-* Twist error calculation
-* Unevenness calculation
-* Acceleration peak detection
-* Automatic flagging of segments exceeding thresholds
+- **Safety Enhancement**: Early detection of track defects to prevent accidents
+- **Maintenance Optimization**: Data-driven maintenance planning
+- **Service Reliability**: Fewer delays due to track issues
+- **Resource Allocation**: Prioritize maintenance based on actual conditions
 
 ---
 
-## 📊 Visualization
+<div align="center">
+  <h3>Best of luck to all Smart India Hackathon participants!</h3>
+  <p>Your innovative solutions have the potential to transform India's railway infrastructure and improve the lives of millions of passengers.</p>
+</div>
 
-The application provides the following interactive visualizations:
-
-* Line charts of track parameters vs chainage
-* Heatmap of parameter correlations
-* Rail profile plot
-* Flag distribution bar chart
-
----
-
-## 🚨 Thresholds
-
-The following thresholds are used for flagging anomalies:
-
-| Parameter             | Threshold |
-| --------------------- | --------- |
-| Gauge deviation       | ±5.0 mm   |
-| Alignment             | 10.0 mm   |
-| Twist                 | 5.0 mm/m  |
-| Cross level           | 7.0 mm    |
-| Unevenness            | 7.0 mm    |
-| Vertical acceleration | 0.7 g     |
-| Lateral acceleration  | 0.5 g     |
-
-*(These thresholds can be modified in the code as needed.)*
-
----
-
-## 🏷️ Project Info
-
-* **Name**: Indian Railways Integrated Track Monitoring System (ITMS)
-* **Technology**: Python, Streamlit, Data Analysis, Visualization
-* **Status**: Prototype
-
----
-
-## 🙌 Acknowledgements
-
-Special thanks to all contributors and the Indian Railways ecosystem inspiring this project.
-
----
-
-# 🚀 Goodluck!
-
-```
-
-Would you like me to also **add screenshots & GIF placeholders** in the README (so your Streamlit app looks even more professional on GitHub)?
-```
+For more detailed information, please see the [COMPREHENSIVE_README.md](./COMPREHENSIVE_README.md) file.
